@@ -1,4 +1,7 @@
 {
+    "brick/math": {
+        "version": "0.9.2"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.2"
     },
@@ -91,11 +94,17 @@
     "laminas/laminas-code": {
         "version": "4.4.2"
     },
+    "moneyphp/money": {
+        "version": "v4.0.2"
+    },
     "monolog/monolog": {
         "version": "2.3.2"
     },
     "myclabs/deep-copy": {
         "version": "1.10.2"
+    },
+    "myclabs/php-enum": {
+        "version": "1.8.3"
     },
     "nikic/php-parser": {
         "version": "v4.12.0"
@@ -161,6 +170,12 @@
     },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "ramsey/collection": {
+        "version": "1.2.1"
+    },
+    "ramsey/uuid": {
+        "version": "4.2.0"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
