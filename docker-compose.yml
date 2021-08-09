@@ -1,0 +1,22 @@
+version: '3'
+services:
+  payroll_php:
+    container_name: payroll_php
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/application
+    ports:
+      - "5000:8080"
+    depends_on:
+      - payroll_db
+  payroll_db:
+    container_name: payroll_db
+    image: "mysql:8"
+    expose:
+      - "3306"
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
