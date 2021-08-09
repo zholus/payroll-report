@@ -11,4 +11,19 @@ class Department
         private AdditionalSalary $additionalSalary
     ) {
     }
+
+    public function getId(): DepartmentId
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getAdditionalSalary(): AdditionalSalary
+    {
+        return $this->additionalSalary;
+    }
 }
