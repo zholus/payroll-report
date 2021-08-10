@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Payroll\Domain;
 
 use App\Payroll\Domain\Policies\SalaryPolicyFactory;
+use App\Payroll\Domain\Report\Record;
+use App\Payroll\Domain\Report\RecordId;
 use DateTimeImmutable;
 use Money\Money;
 
@@ -34,10 +36,10 @@ class Employee
         return (new DateTimeImmutable())->diff($this->employedAt)->y;
     }
 
-    public function createEmployeeRecord(): EmployeeRecord
+    public function createEmployeeRecord(): Record
     {
-        return new EmployeeRecord(
-            new RecordId($this->id->getId()),
+        return new Record(
+            RecordId::create(),
             $this->firstName,
             $this->lastName,
             $this->department->getName(),
@@ -52,7 +54,7 @@ class Employee
     {
         try {
             return SalaryPolicyFactory::create($this)->calculateSupplementSalary($this);
-        } catch (UnsupportedAdditionalSalaryType $e) {
+        } catch (UnsupportedAdditionalSalaryType) {
             return Money::USD(0);
         }
     }

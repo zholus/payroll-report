@@ -5,6 +5,7 @@ namespace App\Payroll\UI\Cli;
 
 use App\Common\Application\Command\CommandBus;
 use App\Payroll\Application\GenerateReport\GenerateReportCommand;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,7 +23,7 @@ final class GeneratePayrollReportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $this->commandBus->dispatch(new GenerateReportCommand());
+        $this->commandBus->dispatch(new GenerateReportCommand(Uuid::uuid4()->toString()));
 
         $io->success('Report has been generated! User command `payroll:report:show` to display table.');
         return self::SUCCESS;

@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Payroll\Domain;
+namespace App\Payroll\Domain\Report;
 
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 
-class RecordId
+class ReportId
 {
     private string $uuid;
 

@@ -5,11 +5,16 @@ namespace App\Payroll\Application\GenerateReport;
 
 use App\Common\Application\Command\CommandHandler;
 use App\Payroll\Domain\EmployeeRepository;
+use App\Payroll\Domain\Report\Report;
+use App\Payroll\Domain\Report\ReportId;
+use App\Payroll\Domain\Report\ReportRepository;
 
 final class GenerateReportHandler implements CommandHandler
 {
-    public function __construct(private EmployeeRepository $employeeRepository)
-    {
+    public function __construct(
+        private EmployeeRepository $employeeRepository,
+        private ReportRepository $reportRepository
+    ) {
     }
 
     public function __invoke(GenerateReportCommand $command): void
@@ -19,6 +24,8 @@ final class GenerateReportHandler implements CommandHandler
             $records[] = $employee->createEmployeeRecord();
         }
 
-        $this->employeeRepository->saveEmployeesRecords(...$records);
+        $this->reportRepository->save(
+            Report::create(new ReportId($command->getReportId()), $records)
+        );
     }
 }
