@@ -23,9 +23,15 @@ final class GeneratePayrollReportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $this->commandBus->dispatch(new GenerateReportCommand(Uuid::uuid4()->toString()));
 
-        $io->success('Report has been generated! User command `payroll:report:show` to display table.');
+        $reportId = Uuid::uuid4()->toString();
+
+        $this->commandBus->dispatch(new GenerateReportCommand($reportId));
+
+        $io->success(sprintf(
+            'Report has been generated! User command `payroll:report:show %s` to display table.',
+            $reportId
+        ));
         return self::SUCCESS;
     }
 }
