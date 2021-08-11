@@ -13,6 +13,6 @@ final class GetReportHandler implements QueryHandler
 
     public function __invoke(GetReportQuery $query): Report
     {
-        return $this->reportReadModel->findReport($query->getReportId());
+        return $this->reportReadModel->findReport($query);
     }
 }

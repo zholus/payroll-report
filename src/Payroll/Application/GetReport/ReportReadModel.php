@@ -5,5 +5,5 @@ namespace App\Payroll\Application\GetReport;
 
 interface ReportReadModel
 {
-    public function findReport(string $reportId): Report;
+    public function findReport(GetReportQuery $query): Report;
 }
