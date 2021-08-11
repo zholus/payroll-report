@@ -11,7 +11,13 @@ use Doctrine\DBAL\Connection;
 
 final class DbalReportReadModel implements ReportReadModel
 {
-    private const ALLOWED_SORT = [
+    private const ALLOWED_FILTER_FIELDS = [
+        'first_name',
+        'last_name',
+        'department_name',
+    ];
+
+    private const ALLOWED_SORT_FIELDS = [
         'first_name',
         'last_name',
         'department_name',
@@ -27,6 +33,9 @@ final class DbalReportReadModel implements ReportReadModel
 
     public function findReport(GetReportQuery $query): Report
     {
+        $sort = $query->getSort();
+        $filter = $query->getFilter();
+
         $qb = $this->connection->createQueryBuilder();
 
         $qb->select(
@@ -43,10 +52,13 @@ final class DbalReportReadModel implements ReportReadModel
             ->setParameter('REPORT_ID', $query->getReportId())
         ;
 
-        if ($query->getSort() !== null &&
-            in_array($query->getSort()->getField(), self::ALLOWED_SORT, true)
-        ) {
-            $qb->orderBy($query->getSort()->getField(), $query->getSort()->getDirection());
+        if ($sort !== null && in_array($sort->getField(), self::ALLOWED_SORT_FIELDS, true)) {
+            $qb->orderBy($sort->getField(), $sort->getDirection());
+        }
+
+        if ($filter !== null && in_array($filter->getField(), self::ALLOWED_FILTER_FIELDS, true)) {
+            $qb->andWhere($filter->getField() . ' LIKE :FILTER_VALUE')
+                ->setParameter('FILTER_VALUE', '%' . $filter->getValue() . '%');
         }
 
         $result = $qb->execute();

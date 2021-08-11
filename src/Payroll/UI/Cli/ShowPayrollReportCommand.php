@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Payroll\UI\Cli;
 
 use App\Common\Application\Query\QueryBus;
+use App\Payroll\Application\GetReport\Filter;
 use App\Payroll\Application\GetReport\GetReportQuery;
 use App\Payroll\Application\GetReport\Report;
 use App\Payroll\Application\GetReport\Sort;
@@ -22,6 +23,8 @@ final class ShowPayrollReportCommand extends Command
     private const REPORT_ID = 'report_id';
     private const SORT_FIELD = 'sort-field';
     private const SORT_DIRECTION = 'sort-direction';
+    private const FILTER_FIELD = 'filter-field';
+    private const FILTER_VALUE = 'filter-value';
 
     public function __construct(private QueryBus $queryBus)
     {
@@ -33,6 +36,8 @@ final class ShowPayrollReportCommand extends Command
         $this->addArgument(self::REPORT_ID, InputArgument::REQUIRED);
         $this->addOption(self::SORT_FIELD, mode: InputOption::VALUE_OPTIONAL);
         $this->addOption(self::SORT_DIRECTION, mode: InputOption::VALUE_OPTIONAL, default: 'asc');
+        $this->addOption(self::FILTER_FIELD, mode: InputOption::VALUE_OPTIONAL);
+        $this->addOption(self::FILTER_VALUE, mode: InputOption::VALUE_OPTIONAL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -41,20 +46,28 @@ final class ShowPayrollReportCommand extends Command
 
         $reportId = $input->getArgument(self::REPORT_ID);
 
-        if ($input->hasOption(self::SORT_FIELD)) {
-            $sort = new Sort($input->getOption(self::SORT_FIELD), $input->getOption(self::SORT_DIRECTION));
+        $sortField = $input->getOption(self::SORT_FIELD);
+        if (null !== $sortField) {
+            $sort = new Sort($sortField, $input->getOption(self::SORT_DIRECTION));
+        }
+
+        $filterField = $input->getOption(self::FILTER_FIELD);
+        $filterValue = $input->getOption(self::FILTER_VALUE);
+        if (null !== $filterField && null !== $filterValue) {
+            $filter = new Filter($filterField, $filterValue);
         }
 
         /** @var Report $report */
         $report = $this->queryBus->handle(
             new GetReportQuery(
                 $reportId,
-                $sort ?? null
+                $sort ?? null,
+                $filter ?? null
             )
         );
 
         if (empty($report->getRecords())) {
-            $io->error('Report not found');
+            $io->error('Report not found, try again with an empty filter');
             return self::FAILURE;
         }
 
