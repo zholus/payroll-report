@@ -20,6 +20,11 @@ final class GeneratePayrollReportCommand extends Command
         parent::__construct();
     }
 
+    public function configure()
+    {
+        $this->setDescription('Generate new payroll report');
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);

@@ -33,10 +33,24 @@ final class ShowPayrollReportCommand extends Command
 
     protected function configure()
     {
+        $this->setDescription('Show payroll report by given ID');
         $this->addArgument(self::REPORT_ID, InputArgument::REQUIRED);
-        $this->addOption(self::SORT_FIELD, mode: InputOption::VALUE_OPTIONAL);
-        $this->addOption(self::SORT_DIRECTION, mode: InputOption::VALUE_OPTIONAL, default: 'asc');
-        $this->addOption(self::FILTER_FIELD, mode: InputOption::VALUE_OPTIONAL);
+        $this->addOption(
+            self::SORT_FIELD,
+            mode: InputOption::VALUE_OPTIONAL,
+            description: 'Available fields: first_name, last_name, department_name, basic_salary, additional_salary_value, additional_salary_type, total_salary'
+        );
+        $this->addOption(
+            self::SORT_DIRECTION,
+            mode: InputOption::VALUE_OPTIONAL,
+            description: 'asc or desc',
+            default: 'asc'
+        );
+        $this->addOption(
+            self::FILTER_FIELD,
+            mode: InputOption::VALUE_OPTIONAL,
+            description: 'Available fields: first_name, last_name, department_name'
+        );
         $this->addOption(self::FILTER_VALUE, mode: InputOption::VALUE_OPTIONAL);
     }
 
