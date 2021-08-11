@@ -5,6 +5,7 @@ namespace App\Payroll\Application\GenerateReport;
 
 use App\Common\Application\Command\CommandHandler;
 use App\Payroll\Domain\EmployeeRepository;
+use App\Payroll\Domain\Report\RecordFactory;
 use App\Payroll\Domain\Report\Report;
 use App\Payroll\Domain\Report\ReportId;
 use App\Payroll\Domain\Report\ReportRepository;
@@ -21,7 +22,7 @@ final class GenerateReportHandler implements CommandHandler
     {
         $records = [];
         foreach ($this->employeeRepository->findAll() as $employee) {
-            $records[] = $employee->createEmployeeRecord();
+            $records[] = RecordFactory::fromEmployee($employee);
         }
 
         $this->reportRepository->save(

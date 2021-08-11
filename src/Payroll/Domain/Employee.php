@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace App\Payroll\Domain;
 
 use App\Payroll\Domain\Policies\SalaryPolicyFactory;
-use App\Payroll\Domain\Report\Record;
-use App\Payroll\Domain\Report\RecordId;
 use DateTimeImmutable;
 use Money\Money;
 
@@ -19,6 +17,16 @@ class Employee
         private Money $salary,
         private DateTimeImmutable $employedAt
     ) {
+    }
+
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
     }
 
     public function getDepartment(): Department
@@ -36,21 +44,12 @@ class Employee
         return (new DateTimeImmutable())->diff($this->employedAt)->y;
     }
 
-    public function createEmployeeRecord(): Record
+    public function getTotalSalary(): Money
     {
-        return new Record(
-            RecordId::create(),
-            $this->firstName,
-            $this->lastName,
-            $this->department->getName(),
-            (int)$this->salary->getAmount(),
-            (int)$this->getAdditionalSalary()->getAmount(),
-            $this->department->getAdditionalSalary()->getType()->getValue(),
-            (int)$this->salary->add($this->getAdditionalSalary())->getAmount()
-        );
+        return $this->getSalary()->add($this->getAdditionalSalary());
     }
 
-    private function getAdditionalSalary(): Money
+    public function getAdditionalSalary(): Money
     {
         try {
             return SalaryPolicyFactory::create($this)->calculateSupplementSalary($this);
