@@ -237,9 +237,6 @@
     "symfony/amqp-messenger": {
         "version": "v5.3.4"
     },
-    "symfony/asset": {
-        "version": "v5.3.4"
-    },
     "symfony/browser-kit": {
         "version": "v5.3.4"
     },
