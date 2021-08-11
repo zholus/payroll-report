@@ -86,11 +86,12 @@ final class ShowPayrollReportCommand extends Command
         }
 
         $presenter = new PayrollReportTablePresenter($report);
+
         $table = new Table($output);
         $table
-            ->setHeaders(['First name', 'Last name', 'Department', 'Basic salary', 'Additional salary', 'Additional salary type', 'Total salary'])
-            ->setRows($presenter->present());
-        $table->render();
+            ->setHeaders($presenter->getHeaders())
+            ->setRows($presenter->getRows())
+            ->render();
 
         return self::SUCCESS;
     }

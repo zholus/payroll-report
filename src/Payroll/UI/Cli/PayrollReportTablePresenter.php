@@ -11,7 +11,20 @@ class PayrollReportTablePresenter
     {
     }
 
-    public function present(): array
+    public function getHeaders(): array
+    {
+        return [
+            'First name',
+            'Last name',
+            'Department',
+            'Basic salary',
+            'Additional salary',
+            'Additional salary type',
+            'Total salary'
+        ];
+    }
+
+    public function getRows(): array
     {
         $tableRows = [];
         foreach ($this->report->getRecords() as $record) {
