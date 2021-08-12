@@ -25,6 +25,10 @@ final class GenerateReportHandler implements CommandHandler
             $records[] = RecordFactory::fromEmployee($employee);
         }
 
+        if (empty($records)) {
+            throw new CannotGenerateReportException('Cannot generate an empty report');
+        }
+
         $this->reportRepository->save(
             Report::create(new ReportId($command->getReportId()), $records)
         );
