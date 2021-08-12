@@ -19,20 +19,20 @@ INSERT INTO payroll.employees (id, department_id, first_name, last_name, salary,
 INSERT INTO payroll.employees (id, department_id, first_name, last_name, salary, employed_at) VALUES ('ff77bb7f-6a1b-4b89-8c54-3547c94d06c8', 'ff625a44-cccf-4a5c-a608-a5f0b4521727', 'Clark', 'Kent', 100000, '2004-08-09 22:52:18');
 ```
 ## Generate report
-`docker-compose exec payroll_php bin/console payroll:report:generate`
+`docker-compose exec payroll_php php bin/console payroll:report:generate`
 
 In response you'll receive report id
 
 ## Show report
-`docker-compose exec payroll_php bin/console payroll:report:show <id>`
+`docker-compose exec payroll_php php bin/console payroll:report:show <id>`
 
-use `bin/console payroll:report:show --help` for more information.
+use `php bin/console payroll:report:show --help` for more information.
 
 ### Sort report
-`docker-compose exec payroll_php bin/console payroll:report:show <id> --sort-field=<field name> --sort-direction=<direction>`
+`docker-compose exec payroll_php php bin/console payroll:report:show <id> --sort-field=<field name> --sort-direction=<direction>`
 
 ### Filter report
-`docker-compose exec payroll_php bin/console payroll:report:show <id> --filter-field=<field name> --filter-value=<value>`
+`docker-compose exec payroll_php php bin/console payroll:report:show <id> --filter-field=<field name> --filter-value=<value>`
 
 
 # Run tests

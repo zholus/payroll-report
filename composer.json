@@ -84,15 +84,15 @@
             "@tests:db:setup"
         ],
         "db:setup": [
-            "bin/console doctrine:database:create",
-            "bin/console doctrine:migrations:migrate -n"
+            "php bin/console doctrine:database:create",
+            "php bin/console doctrine:migrations:migrate -n"
         ],
         "tests:db:setup": [
-            "bin/console --env=test doctrine:database:create",
-            "bin/console --env=test doctrine:migrations:migrate -n"
+            "php bin/console --env=test doctrine:database:create",
+            "php bin/console --env=test doctrine:migrations:migrate -n"
         ],
         "tests": [
-            "bin/phpunit"
+            "php bin/phpunit"
         ]
     },
     "conflict": {
