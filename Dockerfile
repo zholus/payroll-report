@@ -39,7 +39,6 @@ COPY --chown=www-data:www-data . .
 
 USER root
 
-COPY ./entrypoint.sh /entrypoint.sh
 COPY docker/conf/php.ini $PHP_INI_DIR/php.ini
 RUN rm /usr/local/etc/php-fpm.d/* && chown -R www-data:www-data /usr/local/etc/php/conf.d
 COPY docker/conf/fpm.conf /usr/local/etc/php-fpm.d/www.conf
@@ -52,4 +51,4 @@ USER www-data
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "bash", "/application/entrypoint.sh" ]
