@@ -8,5 +8,5 @@ use Money\Money;
 
 interface SalaryPolicy
 {
-    public function calculateSupplementSalary(Employee $employee): Money;
+    public function calculateAdditionalSalary(Employee $employee): Money;
 }

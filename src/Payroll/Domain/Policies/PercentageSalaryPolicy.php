@@ -8,7 +8,7 @@ use Money\Money;
 
 final class PercentageSalaryPolicy implements SalaryPolicy
 {
-    public function calculateSupplementSalary(Employee $employee): Money
+    public function calculateAdditionalSalary(Employee $employee): Money
     {
         return $employee->getSalary()->multiply(
             $employee->getDepartment()->getAdditionalSalary()->getNormalizedValue()

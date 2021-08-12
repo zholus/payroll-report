@@ -5,6 +5,7 @@ namespace App\Payroll\Domain\Policies;
 
 use App\Payroll\Domain\AdditionalSalaryType;
 use App\Payroll\Domain\Employee;
+use App\Payroll\Domain\UnsupportedAdditionalSalaryType;
 
 class SalaryPolicyFactory
 {

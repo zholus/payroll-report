@@ -10,16 +10,16 @@ final class FixedSalaryPolicy implements SalaryPolicy
 {
     private const MAX_WORKED_YEARS_FOR_BONUS = 10;
 
-    public function calculateSupplementSalary(Employee $employee): Money
+    public function calculateAdditionalSalary(Employee $employee): Money
     {
         $workedYears = $employee->workedYears();
 
-        $salarySupplementValue = $employee->getDepartment()->getAdditionalSalary()->getNormalizedValue();
+        $additionalSalaryValue = $employee->getDepartment()->getAdditionalSalary()->getNormalizedValue();
 
         if ($workedYears > self::MAX_WORKED_YEARS_FOR_BONUS) {
-            return Money::USD($salarySupplementValue * self::MAX_WORKED_YEARS_FOR_BONUS);
+            return Money::USD($additionalSalaryValue * self::MAX_WORKED_YEARS_FOR_BONUS);
         }
 
-        return Money::USD($salarySupplementValue * $workedYears);
+        return Money::USD($additionalSalaryValue * $workedYears);
     }
 }

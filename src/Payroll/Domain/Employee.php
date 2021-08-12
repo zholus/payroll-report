@@ -9,7 +9,7 @@ use Money\Money;
 
 class Employee
 {
-    private function __construct(
+    public function __construct(
         private EmployeeId $id,
         private Department $department,
         private string $firstName,
@@ -52,7 +52,7 @@ class Employee
     public function getAdditionalSalary(): Money
     {
         try {
-            return SalaryPolicyFactory::create($this)->calculateSupplementSalary($this);
+            return SalaryPolicyFactory::create($this)->calculateAdditionalSalary($this);
         } catch (UnsupportedAdditionalSalaryType) {
             return Money::USD(0);
         }
